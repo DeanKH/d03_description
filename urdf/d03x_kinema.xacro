@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://ros.org/wiki/xacro" name="d03x">
+  <xacro:property name="pi" value="3.1415926"/>
+  <xacro:include filename="$(find d03_description)/urdf/materials.xacro"/>
+  <xacro:include filename="$(find d03_description)/urdf/component/caster.xacro"/>
+  <link name="base_footprint"/>
+  <joint name="base_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  <link name="base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://d03_description/meshes/base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="alminium"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://d03_description/meshes/base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_left_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel_link"/>
+    <origin xyz="0.129 0.153 0.101" rpy="1.570796 0 0"/>
+    <limit effort="1.0" velocity="1.0"/>
+    <axis rpy="0 0 0" xyz="0 0 1"/>
+  </joint>
+  <link name="left_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://d03_description/meshes/wheel_and_hub.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://d03_description/meshes/wheel_and_hub.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wheel_right_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel_link"/>
+    <origin xyz="0.129 -0.153 0.101" rpy="-1.570796 0 0"/>
+    <limit effort="1.0" velocity="1.0"/>
+    <axis rpy="0 0 0" xyz="0 0 1"/>
+  </joint>
+  <link name="right_wheel_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://d03_description/meshes/wheel_and_hub.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="dark"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://d03_description/meshes/wheel_and_hub.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+  <xacro:caster prefix="left" parent="base_link" base_x="-0.14" base_y="0.14" base_z="0.089837" base_rx="0" base_ry="0" base_rz="${pi}"/>
+  <xacro:caster prefix="right" parent="base_link" base_x="-0.14" base_y="-0.14" base_z="0.089837" base_rx="0" base_ry="0" base_rz="${pi}"/>
+</robot>

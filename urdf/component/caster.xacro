@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="https://ros.org/wiki/xacro" name="caster">
+  <!--include,property-->
+  <xacro:property name="scale" value="0.001"/>
+  <!--macro-->
+  <xacro:macro name="caster" params="prefix parent base_x base_y base_z base_rx base_ry base_rz">
+    <joint name="${prefix}_caster_housing_joint" type="continuous">
+      <parent link="${parent}"/>
+      <child link="${prefix}_caster_housing_link"/>
+      <origin xyz="${base_x} ${base_y} ${base_z}" rpy="${base_rx} ${base_ry} ${base_rz}"/>
+      <axis rpy="0 0 0" xyz="0 0 1"/>
+    </joint>
+    <link name="${prefix}_caster_housing_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://d03_description/meshes/caster_housing.stl" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <material name="dark"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://d03_description/meshes/caster_housing.stl" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}_caster_wheel_joint" type="continuous">
+      <parent link="${prefix}_caster_housing_link"/>
+      <child link="${prefix}_caster_wheel_link"/>
+      <origin xyz="0.031 0.0 -0.052" rpy="0 0 0"/>
+      <axis rpy="0 0 0" xyz="0 1 0"/>
+    </joint>
+    <link name="${prefix}_caster_wheel_link">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://d03_description/meshes/caster_wheel.stl" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+        <material name="dark"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://d03_description/meshes/caster_wheel.stl" scale="${scale} ${scale} ${scale}"/>
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+</robot>
